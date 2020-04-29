@@ -1,0 +1,15 @@
+package Objects;
+
+import org.openqa.selenium.WebDriver;
+
+
+
+public class AccountSummary extends MainPage {
+
+    WebDriver driver;
+
+    public AccountSummary (WebDriver driver) {
+        super(driver);
+        this.driver = driver;
+    }
+}
