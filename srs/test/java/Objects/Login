@@ -1,0 +1,48 @@
+package Objects;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class Login {
+
+    WebDriver driver;
+
+    @FindBy(id = "user_login")
+    private WebElement loginInput;
+
+    @FindBy(id = "user_password")
+    private WebElement passwordInput;
+
+    @FindBy(name = "submit")
+    private WebElement submit;
+
+
+    public Login (WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+
+    public void setLogin (String username) {
+        loginInput.clear();
+        loginInput.sendKeys(username);
+    }
+
+    public void setPassword (String password) {
+        passwordInput.clear();
+        passwordInput.sendKeys(password);
+    }
+
+    public void clickSubmitButton() {
+
+        submit.submit();
+    }
+
+
+    public void doLogin(String username, String password) {
+        setLogin(username);
+        setPassword(password);
+        clickSubmitButton();
+    }
+}
