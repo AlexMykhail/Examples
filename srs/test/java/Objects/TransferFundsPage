@@ -1,0 +1,109 @@
+package Objects;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.Random;
+
+
+public class TransferFundsPage {
+
+    public WebDriver driver;
+    private Random random;
+
+    private Select toAccountDropDown;
+    private Select fromAccountDropDown;
+    private String orderedFromAccount;
+    private String orderedToAccount;
+    private String orderedAmount;
+    private String orderedDescription;
+
+    @FindBy(name="fromAccountId")
+    private WebElement fromAccount;
+    @FindBy(name="toAccountId")
+    private WebElement toAccount;
+    @FindBy(name="amount")
+    private WebElement amountInput;
+    @FindBy(name="description")
+    private WebElement descriptionInput;
+    @FindBy(id="btn_submit")
+    private WebElement continueBtn;
+    @FindBy(className="alert-success")
+    private WebElement successMessageDiv;
+    @FindBy(id="tf_fromAccountId")
+    private WebElement successFromAccount;
+    @FindBy(id="tf_toAccountId")
+    private WebElement successToAccount;
+    @FindBy(id="tf_amount")
+    private WebElement successAmount;
+    @FindBy(id="tf_description")
+    private WebElement successDescription;
+    @FindBy(id="btn_submit")
+    private WebElement submitBtn;
+
+    public TransferFundsPage(WebDriver driver) {
+        this.driver = driver;
+        random = new Random();
+        PageFactory.initElements(driver, this);
+    }
+    public String getOrderedFromAccount() {
+        return orderedFromAccount;
+    }
+    public String getOrderedToAccount() {
+        return orderedToAccount;
+    }
+    public String getOrderedAmount() {
+        return orderedAmount;
+    }
+    public String getOrderedDescription() {
+        return orderedDescription;
+    }
+    public String getSuccessFromAccount() {
+        return successFromAccount.getAttribute("value");
+    }
+    public String getSuccessToAccount() {
+        return successToAccount.getAttribute("value");
+    }
+    public String getSuccessAmount() {
+        return successAmount.getAttribute("value");
+    }
+    public String getSuccessDescription() {
+        return successDescription.getAttribute("value");
+    }
+
+    public void selectRandomFromAccount() {
+        fromAccountDropDown = new Select(fromAccount);
+        int countFromAccountOptions = fromAccountDropDown.getOptions().size();
+        int randomForFromAccount = random.nextInt(countFromAccountOptions);
+        fromAccountDropDown.selectByIndex(randomForFromAccount);
+        orderedFromAccount = fromAccountDropDown.getFirstSelectedOption().getText();
+    }
+    public void selectRandomToAccount() {
+        toAccountDropDown = new Select(toAccount);
+        int countToAccountOptions = toAccountDropDown.getOptions().size();
+        int randomForToAccount = random.nextInt(countToAccountOptions);
+        toAccountDropDown.selectByIndex(randomForToAccount);
+        orderedToAccount = toAccountDropDown.getFirstSelectedOption().getText();
+    }
+    public void setAmount(String amount) {
+        amountInput.clear();
+        amountInput.sendKeys(amount);
+        orderedAmount = amount;
+    }
+    public void setDescription(String description) {
+        descriptionInput.sendKeys(description);
+        orderedDescription = description;
+    }
+    public void clickContinueBtn() {
+        continueBtn.click();
+    }
+    public void clickSubmitBtn() {
+        submitBtn.click();
+    }
+    public String getMessage() {
+        return successMessageDiv.getText();
+    }
+}
