@@ -1,0 +1,75 @@
+package Objects;
+
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import java.util.Random;
+
+
+
+public class AddNewPayeePage {
+
+    private WebDriver driver;
+    private Random random;
+
+
+    @FindBy(linkText="Add New Payee")
+    private WebElement addNewPayee;
+
+    @FindBy(id="np_new_payee_name")
+    private WebElement payeeName;
+
+    @FindBy(id="np_new_payee_address")
+    private WebElement payeeAddress;
+
+    @FindBy(id="np_new_payee_account")
+    private WebElement payeeAccount;
+
+    @FindBy(id="np_new_payee_details")
+    private WebElement payeeDetails;
+
+    @FindBy(id="add_new_payee")
+    private WebElement addBtn;
+
+    @FindBy(id="alert_content")
+    private WebElement successMessageDiv;
+
+
+
+
+    public AddNewPayeePage(WebDriver driver) {
+        this.driver = driver;
+        this.random = new Random();
+        PageFactory.initElements(driver, this);
+    }
+
+    public void setPayeeName (String payeeName1) {
+        payeeName.clear();
+        payeeName.sendKeys(payeeName1);
+    }
+
+    public void setPayeeAddress(String payeeAddress1) {
+        payeeAddress.clear();
+        payeeAddress.sendKeys(payeeAddress1);
+    }
+
+    public void setPayeeAccount (String payeeAccount1) {
+        payeeAccount.clear();
+        payeeAccount.sendKeys(payeeAccount1);
+    }
+
+    public void setPayeeDetails(String payeeDetails1) {
+        payeeDetails.clear();
+        payeeDetails.sendKeys(payeeDetails1);
+    }
+
+    public void clickAddBtn() {
+        addBtn.click();
+    }
+
+    public String getMessage() {
+        return successMessageDiv.getText();
+    }
+}
