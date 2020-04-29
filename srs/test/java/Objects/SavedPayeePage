@@ -1,0 +1,83 @@
+package Objects;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+public class SavedPayeePage {
+
+    public WebDriver driver;
+    private Random random;
+    private Select payeeDropDown;
+    private Select accountDropDown;
+
+
+    @FindBy(id="sp_payee")
+    private WebElement payeeSelect;
+
+    @FindBy(id="sp_account")
+    private WebElement payeeAccount;
+
+    @FindBy(name="amount")
+    private WebElement amountInput;
+
+    @FindBy(id="sp_date")
+    private WebElement dateInput;
+
+    @FindBy(name="description")
+    private WebElement descriptionInput;
+
+    @FindBy(id="pay_saved_payees")
+    private WebElement payBtn;
+
+    @FindBy(id="alert_content")
+    private WebElement successMessageDiv;
+
+
+
+
+    public SavedPayeePage (WebDriver driver) {
+        this.driver = driver;
+        this.random = new Random();
+        PageFactory.initElements(driver, this);
+    }
+
+
+
+    public void selectRandomPayeeSelect() {
+        payeeDropDown = new Select(payeeSelect);
+        int countPayeeOptions = payeeDropDown.getOptions().size();
+        int randomForPayeeDropDown = random.nextInt(countPayeeOptions);
+        payeeDropDown.selectByIndex(randomForPayeeDropDown);
+    }
+    public void selectRandomPayeeAccount() {
+        accountDropDown = new Select(payeeAccount) ;
+        int countAccountOptions = accountDropDown.getOptions().size();
+        int randomForAccountDropDown = random.nextInt(countAccountOptions);
+        accountDropDown.selectByIndex(randomForAccountDropDown);
+    }
+    public void setAmount(String amount) {
+        amountInput.clear();
+        amountInput.sendKeys(amount);
+    }
+    public void setDate (String date) {
+        dateInput.clear();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        dateInput.sendKeys(date);
+    }
+    public void setDescription(String description) {
+        descriptionInput.clear();
+        descriptionInput.sendKeys(description);
+    }
+    public void clickContinueBtn() {
+        this.payBtn.click();
+    }
+    public String getMessage() {
+        return successMessageDiv.getText();
+    }
+}
